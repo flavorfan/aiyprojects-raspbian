@@ -20,14 +20,15 @@ import logging
 
 from aiy.board import Board, Led
 from aiy.cloudspeech import CloudSpeechClient
+from aiy.voice import tts
 
 
 def get_hints(language_code):
     if language_code.startswith('en_'):
-        return ('turn on the light',
-                'turn off the light',
-                'blink the light',
-                'goodbye')
+        return ('开灯',
+                '关灯',
+                '关灯',
+                '再见')
     return None
 
 def locale_language():
@@ -59,14 +60,15 @@ def main():
 
             logging.info('You said: "%s"' % text)
             text = text.lower()
-            if 'turn on the light' in text:
+            if '开灯' in text:
                 board.led.state = Led.ON
-            elif 'turn off the light' in text:
+            elif '关灯' in text:
                 board.led.state = Led.OFF
-            elif 'blink the light' in text:
+            elif '闪灯' in text:
                 board.led.state = Led.BLINK
-            elif 'goodbye' in text:
+            elif '再见' in text:
                 break
+            # tts.say(text)
 
 if __name__ == '__main__':
     main()
